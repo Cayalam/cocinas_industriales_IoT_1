@@ -1,0 +1,224 @@
+.historial-lecturas {
+  background: linear-gradient(135deg, #1e1e1e 0%, #2d2d2d 100%);
+  border-radius: 12px;
+  padding: 24px;
+  margin-bottom: 24px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+  border-left: 5px solid #9c27b0;
+}
+
+.historial-lecturas h3 {
+  color: #fff;
+  font-size: 16px;
+  font-weight: 600;
+  margin: 0 0 16px 0;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.historial-info {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: #b0bec5;
+  font-size: 12px;
+  margin-bottom: 16px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.historial-vacio {
+  text-align: center;
+  padding: 40px 20px;
+  color: #90caf9;
+  font-size: 14px;
+}
+
+.tabla-contenedor {
+  overflow-x: auto;
+  border-radius: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.tabla-historial {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13px;
+}
+
+.tabla-historial thead {
+  background: rgba(255, 255, 255, 0.08);
+  border-bottom: 2px solid rgba(255, 255, 255, 0.1);
+}
+
+.tabla-historial th {
+  padding: 12px 16px;
+  text-align: left;
+  color: #90caf9;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+  white-space: nowrap;
+}
+
+.tabla-historial tbody tr {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  transition: background 0.2s ease;
+}
+
+.tabla-historial tbody tr:hover {
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.tabla-historial tbody tr:last-child {
+  border-bottom: none;
+}
+
+.tabla-historial td {
+  padding: 12px 16px;
+  color: #fff;
+  white-space: nowrap;
+}
+
+.celda-fecha {
+  color: #81c784;
+  font-weight: 500;
+  font-family: 'Courier New', monospace;
+}
+
+.celda-numero {
+  color: #64b5f6;
+  text-align: center;
+  font-weight: 500;
+}
+
+.celda-booleano {
+  text-align: center;
+  font-size: 16px;
+}
+
+.estado-badge {
+  display: inline-block;
+  padding: 4px 10px;
+  border-radius: 4px;
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+  color: #fff;
+}
+
+.paginacion {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+  margin-top: 16px;
+  padding-top: 12px;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.btn-pagina {
+  background: rgba(76, 175, 80, 0.2);
+  border: 1px solid rgba(76, 175, 80, 0.4);
+  color: #4caf50;
+  padding: 6px 12px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 12px;
+  font-weight: 600;
+  transition: all 0.2s ease;
+}
+
+.btn-pagina:hover:not(:disabled) {
+  background: rgba(76, 175, 80, 0.3);
+  border-color: rgba(76, 175, 80, 0.6);
+}
+
+.btn-pagina:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.numeros-pagina {
+  display: flex;
+  gap: 4px;
+}
+
+.numero-pagina {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: #90caf9;
+  width: 28px;
+  height: 28px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 12px;
+  font-weight: 600;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.numero-pagina:hover {
+  background: rgba(255, 255, 255, 0.1);
+  border-color: rgba(255, 255, 255, 0.2);
+}
+
+.numero-pagina.activo {
+  background: #90caf9;
+  color: #0f0f0f;
+  border-color: #90caf9;
+}
+
+@media (max-width: 1024px) {
+  .historial-lecturas {
+    padding: 16px;
+  }
+
+  .tabla-historial {
+    font-size: 12px;
+  }
+
+  .tabla-historial th,
+  .tabla-historial td {
+    padding: 8px 12px;
+  }
+}
+
+@media (max-width: 768px) {
+  .tabla-contenedor {
+    overflow-x: scroll;
+  }
+
+  .tabla-historial th,
+  .tabla-historial td {
+    padding: 8px 10px;
+  }
+
+  .historial-info {
+    flex-direction: column;
+    gap: 8px;
+    align-items: flex-start;
+  }
+}
+
+@media (max-width: 480px) {
+  .historial-lecturas {
+    padding: 12px;
+  }
+
+  .tabla-historial {
+    font-size: 11px;
+  }
+
+  .tabla-historial th,
+  .tabla-historial td {
+    padding: 6px 8px;
+  }
+
+  .paginacion {
+    flex-wrap: wrap;
+  }
+}

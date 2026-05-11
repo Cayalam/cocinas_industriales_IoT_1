@@ -1,0 +1,130 @@
+.alertas-section {
+  background: linear-gradient(135deg, #1e1e1e 0%, #2d2d2d 100%);
+  border-radius: 12px;
+  padding: 24px;
+  margin-bottom: 24px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+  border-left: 5px solid #ff9800;
+}
+
+.alertas-section h3 {
+  color: #fff;
+  font-size: 16px;
+  font-weight: 600;
+  margin: 0 0 20px 0;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.alerta-principal {
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 8px;
+  border-left: 5px solid;
+  padding: 16px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  transition: all 0.3s ease;
+}
+
+.alerta-principal:hover {
+  background: rgba(255, 255, 255, 0.08);
+  transform: translateX(4px);
+}
+
+.alerta-icono {
+  font-size: 36px;
+  flex-shrink: 0;
+}
+
+.alerta-contenido {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.alerta-titulo {
+  font-size: 16px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.alerta-descripcion {
+  font-size: 13px;
+  color: #b0bec5;
+}
+
+.alerta-urgencia {
+  flex-shrink: 0;
+  background: rgba(244, 67, 54, 0.2);
+  color: #f44336;
+  padding: 8px 12px;
+  border-radius: 4px;
+  font-size: 12px;
+  font-weight: 600;
+  animation: pulse-alert 1s infinite;
+}
+
+/* Estados específicos */
+.alerta-principal.normal {
+  border-left-color: #4caf50;
+}
+
+.alerta-principal.temperatura_alta {
+  border-left-color: #ff9800;
+}
+
+.alerta-principal.gas_detectado {
+  border-left-color: #f44336;
+}
+
+.alerta-principal.llama_detectada {
+  border-left-color: #f44336;
+}
+
+.alerta-principal.emergencia {
+  border-left-color: #c62828;
+  background: rgba(198, 40, 40, 0.1);
+  animation: emergencia-blink 1s infinite;
+}
+
+@keyframes pulse-alert {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.7;
+  }
+}
+
+@keyframes emergencia-blink {
+  0%, 100% {
+    background: rgba(198, 40, 40, 0.1);
+  }
+  50% {
+    background: rgba(198, 40, 40, 0.2);
+  }
+}
+
+@media (max-width: 768px) {
+  .alertas-section {
+    padding: 16px;
+  }
+
+  .alerta-principal {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+  }
+
+  .alerta-icono {
+    font-size: 28px;
+  }
+
+  .alerta-urgencia {
+    width: 100%;
+    text-align: center;
+  }
+}
