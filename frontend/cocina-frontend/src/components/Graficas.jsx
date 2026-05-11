@@ -1,0 +1,165 @@
+import React from 'react';
+import {
+  LineChart,
+  Line,
+  XAxis,
+  YAxis,
+  CartesianGrid,
+  Tooltip,
+  Legend,
+  ResponsiveContainer,
+} from 'recharts';
+import '../styles/Graficas.css';
+
+const Graficas = ({ lecturas }) => {
+  if (!lecturas || lecturas.length === 0) {
+    return (
+      <div className="graficas-contenedor">
+        <p className="sin-datos">No hay datos disponibles para las gráficas</p>
+      </div>
+    );
+  }
+
+  // Preparar datos para las gráficas - últimas 20 lecturas
+  const datosGrafica = lecturas
+    .slice(-20)
+    .reverse()
+    .map((lectura, index) => ({
+      id: index,
+      tiempo: new Date(lectura.timestamp).toLocaleTimeString('es-CO', {
+        hour: '2-digit',
+        minute: '2-digit',
+      }),
+      temperatura: parseFloat(lectura.temperatura),
+      gas: lectura.nivel_gas,
+    }));
+
+  // Encontrar min y max para temperaturas
+  const temps = datosGrafica.map((d) => d.temperatura);
+  const minTemp = Math.floor(Math.min(...temps));
+  const maxTemp = Math.ceil(Math.max(...temps));
+
+  return (
+    <div className="graficas-seccion">
+      <h3>Gráficas de Monitoreo</h3>
+
+      <div className="graficas-grid">
+        {/* Gráfica de Temperatura */}
+        <div className="grafica-card">
+          <h4>Temperatura vs Tiempo</h4>
+          <ResponsiveContainer width="100%" height={300}>
+            <LineChart
+              data={datosGrafica}
+              margin={{ top: 5, right: 30, left: 0, bottom: 5 }}
+            >
+              <CartesianGrid
+                strokeDasharray="3 3"
+                stroke="rgba(255, 255, 255, 0.1)"
+              />
+              <XAxis
+                dataKey="tiempo"
+                stroke="#90caf9"
+                style={{ fontSize: '12px' }}
+              />
+              <YAxis
+                stroke="#90caf9"
+                domain={[minTemp - 1, maxTemp + 1]}
+                label={{ value: '°C', angle: -90, position: 'insideLeft' }}
+                style={{ fontSize: '12px' }}
+              />
+              <Tooltip
+                contentStyle={{
+                  backgroundColor: '#1e1e1e',
+                  border: '1px solid #90caf9',
+                  borderRadius: '8px',
+                }}
+                labelStyle={{ color: '#90caf9' }}
+                formatter={(value) => [`${value.toFixed(1)}°C`, 'Temperatura']}
+              />
+              <Legend wrapperStyle={{ paddingTop: '20px' }} />
+              <Line
+                type="monotone"
+                dataKey="temperatura"
+                stroke="#ff6b6b"
+                dot={{ fill: '#ff6b6b', r: 4 }}
+                activeDot={{ r: 6 }}
+                name="Temperatura"
+                strokeWidth={2}
+              />
+            </LineChart>
+          </ResponsiveContainer>
+        </div>
+
+        {/* Gráfica de Gas */}
+        <div className="grafica-card">
+          <h4>Nivel de Gas vs Tiempo</h4>
+          <ResponsiveContainer width="100%" height={300}>
+            <LineChart
+              data={datosGrafica}
+              margin={{ top: 5, right: 30, left: 0, bottom: 5 }}
+            >
+              <CartesianGrid
+                strokeDasharray="3 3"
+                stroke="rgba(255, 255, 255, 0.1)"
+              />
+              <XAxis
+                dataKey="tiempo"
+                stroke="#90caf9"
+                style={{ fontSize: '12px' }}
+              />
+              <YAxis
+                stroke="#90caf9"
+                label={{ value: 'ppm', angle: -90, position: 'insideLeft' }}
+                style={{ fontSize: '12px' }}
+              />
+              <Tooltip
+                contentStyle={{
+                  backgroundColor: '#1e1e1e',
+                  border: '1px solid #ffd54f',
+                  borderRadius: '8px',
+                }}
+                labelStyle={{ color: '#ffd54f' }}
+                formatter={(value) => [`${value} ppm`, 'Gas']}
+              />
+              <Legend wrapperStyle={{ paddingTop: '20px' }} />
+              <Line
+                type="monotone"
+                dataKey="gas"
+                stroke="#ffd54f"
+                dot={{ fill: '#ffd54f', r: 4 }}
+                activeDot={{ r: 6 }}
+                name="Nivel de Gas"
+                strokeWidth={2}
+              />
+            </LineChart>
+          </ResponsiveContainer>
+        </div>
+      </div>
+
+      <div className="estadisticas-graficas">
+        <div className="stat-card">
+          <span className="stat-label">Temperatura Actual</span>
+          <span className="stat-valor">
+            {datosGrafica[datosGrafica.length - 1].temperatura}°C
+          </span>
+        </div>
+        <div className="stat-card">
+          <span className="stat-label">Temperatura Mín</span>
+          <span className="stat-valor">{minTemp}°C</span>
+        </div>
+        <div className="stat-card">
+          <span className="stat-label">Temperatura Máx</span>
+          <span className="stat-valor">{maxTemp}°C</span>
+        </div>
+        <div className="stat-card">
+          <span className="stat-label">Gas Actual</span>
+          <span className="stat-valor">
+            {datosGrafica[datosGrafica.length - 1].gas} ppm
+          </span>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default Graficas;

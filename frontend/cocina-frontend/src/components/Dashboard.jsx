@@ -3,6 +3,7 @@ import LecturaActual from './LecturaActual';
 import EstadoVentiladores from './EstadoVentiladores';
 import Alertas from './Alertas';
 import HistorialLecturas from './HistorialLecturas';
+import Graficas from './Graficas';
 import { obtenerUltimaLectura, obtenerLecturas } from '../services/api';
 import '../styles/Dashboard.css';
 
@@ -134,6 +135,7 @@ const Dashboard = () => {
         <LecturaActual lectura={lectura} />
         <EstadoVentiladores lectura={lectura} />
         <Alertas lectura={lectura} />
+        <Graficas lecturas={lecturas} />
         <HistorialLecturas lecturas={lecturas} />
       </div>
 
