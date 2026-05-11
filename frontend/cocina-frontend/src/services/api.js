@@ -55,4 +55,67 @@ export const obtenerAlertas = async () => {
   }
 };
 
+/**
+ * Obtiene un resumen del estado actual del sistema
+ * @returns {Promise} Resumen con estado actual, datos de sensores y estadísticas
+ */
+export const obtenerResumen = async () => {
+  try {
+    const response = await api.get('/lecturas/resumen/');
+    return response.data;
+  } catch (error) {
+    console.error('Error al obtener resumen:', error);
+    throw error;
+  }
+};
+
+/**
+ * Crea una nueva lectura (utilizado por el ESP32)
+ * @param {Object} datos - Objeto con los datos de la lectura
+ * @returns {Promise} Lectura creada
+ */
+export const crearLectura = async (datos) => {
+  try {
+    const response = await api.post('/lecturas/', datos);
+    return response.data;
+  } catch (error) {
+    console.error('Error al crear lectura:', error);
+    throw error;
+  }
+};
+
+/**
+ * Obtiene alertas con filtro opcional por tipo
+ * @param {string} tipo - Tipo de alerta a filtrar (opcional)
+ * @returns {Promise} Array de alertas filtradas
+ */
+export const obtenerAlertusPorTipo = async (tipo) => {
+  try {
+    const response = await api.get('/lecturas/alertas/', {
+      params: { tipo },
+    });
+    return response.data;
+  } catch (error) {
+    console.error('Error al obtener alertas por tipo:', error);
+    throw error;
+  }
+};
+
+/**
+ * Obtiene las lecturas filtradas por estado del sistema
+ * @param {string} estado - Estado a filtrar (NORMAL, GAS_DETECTADO, etc.)
+ * @returns {Promise} Array de lecturas filtradas
+ */
+export const obtenerLecturasPorEstado = async (estado) => {
+  try {
+    const response = await api.get('/lecturas/', {
+      params: { estado },
+    });
+    return response.data;
+  } catch (error) {
+    console.error('Error al obtener lecturas por estado:', error);
+    throw error;
+  }
+};
+
 export default api;
