@@ -1,0 +1,86 @@
+.estado-ventiladores {
+  padding: 20px;
+  background: #1d2230;
+  border: 1px solid #32394d;
+}
+
+.estado-ventiladores h3 {
+  margin: 0 0 16px;
+  color: #c8d6ee;
+  font-size: 12px;
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.ventiladores-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+}
+
+.ventilador-card {
+  padding: 16px 12px;
+  background: #151a27;
+  border: 1px solid #2e374c;
+  text-align: center;
+  position: relative;
+}
+
+.ventilador-card.activo {
+  border-color: rgba(34, 224, 125, .45);
+  background: linear-gradient(180deg, #182333, #121824);
+}
+
+.ventilador-icono {
+  color: #8fb1ff;
+  font-size: 24px;
+}
+
+.ventilador-nombre {
+  min-height: 34px;
+  margin-top: 10px;
+  color: #dce6f8;
+  font-size: 11px;
+  font-weight: 900;
+  text-transform: uppercase;
+}
+
+.estado-badge {
+  display: inline-flex;
+  margin-top: 8px;
+  padding: 5px 8px;
+  font-size: 10px;
+  font-weight: 900;
+  letter-spacing: .7px;
+}
+
+.estado-badge.encendido {
+  color: #22e07d;
+  background: rgba(34, 224, 125, .12);
+}
+
+.estado-badge.apagado {
+  color: #9aa9c2;
+  background: rgba(154, 169, 194, .1);
+}
+
+.ventilador-indicador {
+  position: absolute;
+  left: 10px;
+  right: 10px;
+  bottom: 0;
+  height: 3px;
+  background: #3a4358;
+}
+
+.ventilador-indicador.activo {
+  background: #22e07d;
+  box-shadow: 0 0 12px rgba(34, 224, 125, .8);
+}
+
+@media (max-width: 640px) {
+  .ventiladores-grid {
+    grid-template-columns: 1fr;
+  }
+}

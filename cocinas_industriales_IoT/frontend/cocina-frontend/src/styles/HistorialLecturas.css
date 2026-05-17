@@ -1,0 +1,109 @@
+.historial-lecturas {
+  padding: 20px;
+  background: #1d2230;
+  border: 1px solid #32394d;
+}
+
+.historial-lecturas h3 {
+  margin: 0 0 14px;
+  color: #c8d6ee;
+  font-size: 12px;
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.historial-info {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 14px;
+  color: #8fa0bd;
+  font-size: 11px;
+  font-weight: 800;
+  text-transform: uppercase;
+}
+
+.tabla-contenedor {
+  overflow-x: auto;
+  border: 1px solid #2e374c;
+}
+
+.tabla-historial {
+  width: 100%;
+  border-collapse: collapse;
+  background: #151a27;
+  font-size: 12px;
+}
+
+.tabla-historial thead {
+  background: #1d2535;
+}
+
+.tabla-historial th {
+  padding: 13px 12px;
+  text-align: left;
+  color: #9db9ff;
+  font-size: 10px;
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: .8px;
+}
+
+.tabla-historial td {
+  padding: 12px;
+  color: #e6eefc;
+  border-top: 1px solid #2a3244;
+  font-weight: 700;
+}
+
+.tabla-historial tbody tr:hover {
+  background: rgba(118, 169, 255, .08);
+}
+
+.celda-fecha {
+  color: #ffffff;
+}
+
+.celda-numero {
+  text-align: center;
+}
+
+.estado-badge {
+  display: inline-flex;
+  padding: 5px 9px;
+  background: rgba(34, 224, 125, .12);
+  color: #22e07d;
+  font-size: 10px;
+  font-weight: 900;
+  text-transform: uppercase;
+}
+
+.paginacion {
+  margin-top: 16px;
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+}
+
+.btn-pagina,
+.numero-pagina {
+  padding: 8px 12px;
+  background: #151a27;
+  border: 1px solid #2e374c;
+  color: #9db9ff;
+  font-size: 11px;
+  font-weight: 900;
+  cursor: pointer;
+}
+
+.numero-pagina.activo {
+  background: #2d4771;
+  color: #fff;
+}
+
+.historial-vacio {
+  padding: 36px;
+  color: #9aa9c2;
+  text-align: center;
+  font-weight: 800;
+}
