@@ -1,0 +1,169 @@
+.terminal-layout {
+  min-height: 100vh;
+  margin-left: 260px;
+  background: #111622;
+  color: #dfe8fb;
+}
+
+.terminal-topbar {
+  height: 58px;
+  padding: 0 28px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: #151a27;
+  border-bottom: 1px solid #293143;
+}
+
+.terminal-topbar h1 {
+  margin: 0;
+  display: inline-block;
+  font-size: 17px;
+  font-weight: 900;
+  letter-spacing: .8px;
+}
+
+.topbar-status {
+  margin-left: 20px;
+  color: #97b8ff;
+  font-size: 12px;
+  font-weight: 900;
+  text-transform: uppercase;
+}
+
+.topbar-actions {
+  display: flex;
+  gap: 14px;
+  align-items: center;
+}
+
+.system-pill,
+.emergency-btn {
+  height: 28px;
+  padding: 0 18px;
+  display: inline-flex;
+  align-items: center;
+  border-radius: 0;
+  background: transparent;
+  font-size: 11px;
+  font-weight: 900;
+  letter-spacing: .8px;
+}
+
+.system-pill {
+  color: #b7caff;
+  border: 1px solid #6178ad;
+}
+
+.emergency-btn {
+  color: #ff9d9d;
+  border: 1px solid #d05b5b;
+}
+
+.operation-banner {
+  margin: 24px 28px 18px;
+  padding: 18px 22px;
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+  background: #202634;
+  border: 1px solid #30384c;
+  box-shadow: inset 4px 0 0 #16c86f;
+}
+
+.operation-banner h2 {
+  margin: 0 0 5px;
+  font-size: 16px;
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: .5px;
+}
+
+.operation-banner p {
+  margin: 0;
+  color: #a9b7d0;
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.last-reading {
+  min-width: 190px;
+  text-align: right;
+  text-transform: uppercase;
+}
+
+.last-reading span {
+  display: block;
+  color: #9aa9c2;
+  font-size: 11px;
+  font-weight: 900;
+  letter-spacing: 1px;
+}
+
+.last-reading strong {
+  display: block;
+  margin-top: 4px;
+  color: #ffffff;
+  font-size: 13px;
+}
+
+.terminal-content {
+  padding: 0 28px 34px;
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 16px;
+}
+
+.lectura-actual {
+  grid-column: span 4;
+}
+
+.estado-ventiladores,
+.alertas-section {
+  grid-column: span 2;
+}
+
+.graficas-seccion,
+.historial-lecturas {
+  grid-column: span 4;
+}
+
+.loading-panel {
+  margin: 28px;
+  padding: 40px;
+  background: #1b2030;
+  border: 1px solid #30384c;
+  text-align: center;
+  color: #9fb5da;
+}
+
+@media (max-width: 1100px) {
+  .terminal-content {
+    grid-template-columns: 1fr;
+  }
+
+  .lectura-actual,
+  .estado-ventiladores,
+  .alertas-section,
+  .graficas-seccion,
+  .historial-lecturas {
+    grid-column: span 1;
+  }
+}
+
+@media (max-width: 900px) {
+  .terminal-layout {
+    margin-left: 0;
+  }
+
+  .terminal-topbar,
+  .operation-banner {
+    flex-direction: column;
+    height: auto;
+    align-items: flex-start;
+  }
+
+  .last-reading {
+    text-align: left;
+  }
+}

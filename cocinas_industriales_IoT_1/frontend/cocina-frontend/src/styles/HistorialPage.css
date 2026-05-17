@@ -1,0 +1,49 @@
+.terminal-content {
+  padding: 24px 28px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.historial-stats {
+  display: flex;
+  gap: 20px;
+  margin-bottom: 30px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.stat-card {
+  background: #151a27;
+  border: 1px solid #293143;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  transition: all 0.3s ease;
+  flex: 1;
+  min-width: 200px;
+}
+
+.stat-card:hover {
+  border-color: #6178ad;
+  transform: translateY(-2px);
+}
+
+.stat-label {
+  color: #9aa9c2;
+  font-size: 12px;
+  font-weight: 900;
+  text-transform: uppercase;
+}
+
+.stat-value {
+  color: #dfe8fb;
+  font-size: 1.8rem;
+  font-weight: bold;
+}
+
+@media (max-width: 768px) {
+  .historial-stats {
+    grid-template-columns: 1fr;
+  }
+}
