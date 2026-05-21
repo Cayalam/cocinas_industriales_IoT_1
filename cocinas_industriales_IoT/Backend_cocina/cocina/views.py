@@ -63,7 +63,8 @@ class DispositivoViewSet(viewsets.ReadOnlyModelViewSet):
     """Lista y detalle de dispositivos a los que el usuario tiene acceso."""
     permission_classes = [IsAuthenticated]
     serializer_class = DispositivoResumenSerializer
-
+    queryset = Dispositivo.objects.none()
+    
     def get_queryset(self):
         user = self.request.user
         if user.is_staff:
