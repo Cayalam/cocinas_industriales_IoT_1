@@ -8,6 +8,7 @@ import SelectorDispositivo from './pages/SelectorDispositivo';
 import DashboardPage from './pages/DashboardPage';
 import HistorialPage from './pages/HistorialPage';
 import AlertasPage from './pages/AlertasPage';
+import AnalisisPage from './pages/AnalisisPage';
 
 // Ruta protegida: redirige a login si no hay sesión
 function RutaProtegida({ children }) {
@@ -51,6 +52,12 @@ function AppRoutes() {
       <Route path="/dispositivo/:dispositivoId/alertas" element={
         <RutaProtegida>
           <LayoutConSidebar><AlertasPage /></LayoutConSidebar>
+        </RutaProtegida>
+      } />
+
+      <Route path="/dispositivo/:dispositivoId/analisis" element={
+        <RutaProtegida>
+          <LayoutConSidebar><AnalisisPage /></LayoutConSidebar>
         </RutaProtegida>
       } />
 

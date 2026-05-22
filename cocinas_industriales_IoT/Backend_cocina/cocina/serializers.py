@@ -69,6 +69,9 @@ class LecturaSerializer(serializers.ModelSerializer):
             'ventilador_extraccion',
             'ventilador_inyeccion_1',
             'ventilador_inyeccion_2',
+            'aspersion_activa',
+            'valvulas_cerradas',
+            'evacuacion_activa',
             'estado_sistema',
             'timestamp',
             'es_alerta',
@@ -92,9 +95,12 @@ class LecturaSerializer(serializers.ModelSerializer):
         return value
 
     def validate_presion(self, value):
-        if value and (value < 900 or value > 1100):
+        if value is None:
+            return 0
+        # Solo rechazar valores claramente fuera de rango físico
+        if value != 0 and (value < 800 or value > 1200):
             raise serializers.ValidationError(
-                f"Presión debe estar entre 900 y 1100 hPa, recibido: {value}"
+                f"Presión debe estar entre 800 y 1200 hPa, recibido: {value}"
             )
         return value
 

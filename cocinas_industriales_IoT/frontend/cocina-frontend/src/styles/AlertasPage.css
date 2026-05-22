@@ -168,3 +168,63 @@
     gap: 6px;
   }
 }
+
+/* Scroll fijo para historial */
+.historial-alertas-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 14px;
+}
+
+.historial-alertas-header h3 {
+  margin-bottom: 0;
+}
+
+.alertas-contador {
+  color: #8ea0bf;
+  font-size: 11px;
+  font-weight: 700;
+  background: #1d2230;
+  border: 1px solid #2e3a50;
+  padding: 3px 10px;
+}
+
+.alertas-scroll {
+  max-height: 480px;
+  overflow-y: auto;
+  scrollbar-width: thin;
+  scrollbar-color: #2e3a50 transparent;
+}
+
+.alertas-scroll::-webkit-scrollbar {
+  width: 5px;
+}
+
+.alertas-scroll::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.alertas-scroll::-webkit-scrollbar-thumb {
+  background: #2e3a50;
+  border-radius: 3px;
+}
+
+/* Colores por tipo de alerta */
+.alerta-llama-detectada { border-left-color: #ff5252 !important; }
+.alerta-emergencia       { border-left-color: #b71c1c !important; }
+.alerta-emergencia-gas   { border-left-color: #e53935 !important; }
+.alerta-gas-detectado    { border-left-color: #ffd54f !important; }
+.alerta-temperatura-alta { border-left-color: #ff8a65 !important; }
+
+.badge-aspersion {
+  color: #80cbc4;
+  font-size: 10px;
+  font-weight: 900;
+}
+
+.badge-valvula {
+  color: #ef9a9a;
+  font-size: 10px;
+  font-weight: 900;
+}

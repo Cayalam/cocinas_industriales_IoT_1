@@ -90,4 +90,9 @@ export const obtenerResumen = async (dispositivoId) => {
   return data;
 };
 
+export const obtenerAnalisis = async (dispositivoId, periodo = '24h') => {
+  const { data } = await api.get(`/dispositivos/${dispositivoId}/analisis/`, { params: { periodo } });
+  return data;
+};
+
 export default api;

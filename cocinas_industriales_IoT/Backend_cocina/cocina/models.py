@@ -59,6 +59,11 @@ class Lectura(models.Model):
     ventilador_inyeccion_1 = models.BooleanField(default=False)
     ventilador_inyeccion_2 = models.BooleanField(default=False)
 
+    # Actuadores de emergencia
+    aspersion_activa = models.BooleanField(default=False, help_text="Sistema de aspersión activo")
+    valvulas_cerradas = models.BooleanField(default=False, help_text="Válvulas de gas cerradas")
+    evacuacion_activa = models.BooleanField(default=False, help_text="Protocolo de evacuación activo")
+
     # Estado calculado del sistema
     estado_sistema = models.CharField(max_length=20, choices=ESTADO_CHOICES, default='NORMAL')
 

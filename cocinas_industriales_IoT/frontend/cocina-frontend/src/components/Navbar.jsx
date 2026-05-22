@@ -32,6 +32,9 @@ export default function Navbar() {
         <NavLink to={`${base}/alertas`} className={({ isActive }) => `sidebar-link ${isActive ? 'activo' : ''}`}>
           <span>△</span> Alertas
         </NavLink>
+        <NavLink to={`${base}/analisis`} className={({ isActive }) => `sidebar-link ${isActive ? 'activo' : ''}`}>
+          <span>◈</span> Análisis
+        </NavLink>
       </nav>
 
       <div className="sidebar-footer">

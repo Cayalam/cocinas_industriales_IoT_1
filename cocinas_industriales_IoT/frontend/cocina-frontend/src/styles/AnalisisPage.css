@@ -1,0 +1,206 @@
+/* ── Selector de período ── */
+.analisis-periodos {
+  display: flex;
+  gap: 8px;
+  padding: 16px 28px;
+  background: #131722;
+  border-bottom: 1px solid #1e2535;
+}
+
+.periodo-btn {
+  background: #1d2230;
+  border: 1px solid #2e3a50;
+  color: #9aa9c2;
+  padding: 6px 16px;
+  font-size: 11px;
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: .5px;
+  cursor: pointer;
+  transition: all .15s;
+}
+
+.periodo-btn:hover {
+  border-color: #4a6fa5;
+  color: #c8d6ee;
+}
+
+.periodo-btn.activo {
+  background: #1e3a5f;
+  border-color: #4a90d9;
+  color: #7ab8ff;
+}
+
+/* ── Contenido ── */
+.analisis-content {
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+}
+
+/* ── KPIs ── */
+.analisis-kpis {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 12px;
+}
+
+.kpi-card {
+  background: #151a27;
+  border: 1px solid #293143;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.kpi-label {
+  color: #8ea0bf;
+  font-size: 10px;
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: .6px;
+}
+
+.kpi-valor {
+  color: #e0ecff;
+  font-size: 1.8rem;
+  font-weight: 900;
+  line-height: 1;
+}
+
+.kpi-sub {
+  color: #5a6a80;
+  font-size: 10px;
+  font-weight: 700;
+  margin-top: 4px;
+}
+
+.kpi-temp .kpi-valor { color: #ff8a65; }
+.kpi-gas  .kpi-valor { color: #ffd54f; }
+.kpi-presion .kpi-valor { color: #81c784; }
+
+/* ── Eventos ── */
+.seccion-titulo {
+  color: #c8d6ee;
+  font-size: 11px;
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-bottom: 14px;
+}
+
+.eventos-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  gap: 12px;
+}
+
+.evento-card {
+  background: #151a27;
+  border: 1px solid #293143;
+  border-left: 4px solid #293143;
+  padding: 18px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  text-align: center;
+}
+
+.evento-card.alerta       { border-left-color: #b71c1c; background: #1e1212; }
+.evento-card.alerta-fuego { border-left-color: #ff5252; background: #1e1616; }
+.evento-card.alerta-agua  { border-left-color: #26c6da; background: #111d1e; }
+.evento-card.alerta-valvula { border-left-color: #ef5350; background: #1e1414; }
+
+.evento-icono { font-size: 1.8rem; }
+
+.evento-valor {
+  font-size: 1.6rem;
+  font-weight: 900;
+  color: #dfe8fb;
+}
+
+.evento-label {
+  color: #8ea0bf;
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: .4px;
+}
+
+/* ── Gráficas ── */
+.graficas-analisis-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 16px;
+}
+
+.grafica-analisis-card {
+  background: #151a27;
+  border: 1px solid #293143;
+  padding: 18px;
+}
+
+.grafica-analisis-card h4 {
+  color: #8ea0bf;
+  font-size: 11px;
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: .6px;
+  margin-bottom: 14px;
+}
+
+/* ── Distribución ── */
+.distribucion-contenido {
+  display: flex;
+  align-items: center;
+  gap: 32px;
+  background: #151a27;
+  border: 1px solid #293143;
+  padding: 20px;
+}
+
+.distribucion-leyenda {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  min-width: 200px;
+}
+
+.leyenda-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.leyenda-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.leyenda-nombre {
+  color: #c8d6ee;
+  font-size: 11px;
+  font-weight: 700;
+  flex: 1;
+  text-transform: uppercase;
+}
+
+.leyenda-valor {
+  color: #9aa9c2;
+  font-size: 11px;
+  font-weight: 900;
+}
+
+@media (max-width: 768px) {
+  .distribucion-contenido {
+    flex-direction: column;
+  }
+
+  .graficas-analisis-grid {
+    grid-template-columns: 1fr;
+  }
+}

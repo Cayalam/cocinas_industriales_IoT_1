@@ -4,7 +4,9 @@ from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated, AllowAny
 from rest_framework_simplejwt.tokens import RefreshToken
 from django.contrib.auth import authenticate
-from django.db.models import Q
+from django.db.models import Q, Avg, Max, Min, Count
+from django.utils import timezone
+from datetime import timedelta
 from .models import Lectura, Dispositivo
 from .serializers import (
     LecturaSerializer, AlertaSerializer,
@@ -126,6 +128,90 @@ class DispositivoViewSet(viewsets.ReadOnlyModelViewSet):
             return Response({'detalle': 'Sin datos disponibles'}, status=status.HTTP_404_NOT_FOUND)
 
 
+    @action(detail=True, methods=['get'])
+    def analisis(self, request, pk=None):
+        """Análisis estadístico completo de un dispositivo para todos los periodos."""
+        dispositivo = self.get_object()
+        periodo = request.query_params.get('periodo', '24h')
+
+        ahora = timezone.now()
+        delta_map = {
+            '1h':  timedelta(hours=1),
+            '6h':  timedelta(hours=6),
+            '24h': timedelta(hours=24),
+            '7d':  timedelta(days=7),
+            '30d': timedelta(days=30),
+        }
+        delta = delta_map.get(periodo, timedelta(hours=24))
+        desde = ahora - delta
+
+        qs = dispositivo.lecturas.filter(timestamp__gte=desde)
+        total = qs.count()
+
+        if total == 0:
+            return Response({'detalle': 'Sin datos en el periodo seleccionado', 'total': 0})
+
+        stats = qs.aggregate(
+            temp_avg=Avg('temperatura'),
+            temp_max=Max('temperatura'),
+            temp_min=Min('temperatura'),
+            gas_avg=Avg('nivel_gas'),
+            gas_max=Max('nivel_gas'),
+            presion_avg=Avg('presion'),
+            presion_max=Max('presion'),
+            presion_min=Min('presion'),
+        )
+
+        # Distribución de estados
+        estados = list(qs.values('estado_sistema').annotate(cantidad=Count('id')).order_by('-cantidad'))
+
+        # Eventos de emergencia
+        emergencias = qs.filter(estado_sistema__in=['EMERGENCIA', 'LLAMA_DETECTADA', 'EMERGENCIA_GAS']).count()
+        llamas = qs.filter(llama_detectada=True).count()
+        aspersiones = qs.filter(aspersion_activa=True).count()
+        valvulas_cerradas = qs.filter(valvulas_cerradas=True).count()
+
+        # Serie temporal para gráficas (máximo 200 puntos, submuestreo si hay más)
+        lecturas_qs = qs.order_by('timestamp')
+        step = max(1, total // 200)
+        ids = list(lecturas_qs.values_list('id', flat=True)[::step])
+        serie = list(
+            dispositivo.lecturas.filter(id__in=ids).order_by('timestamp').values(
+                'timestamp', 'temperatura', 'nivel_gas', 'presion', 'estado_sistema',
+                'llama_detectada', 'aspersion_activa', 'valvulas_cerradas'
+            )
+        )
+
+        return Response({
+            'periodo': periodo,
+            'desde': desde,
+            'hasta': ahora,
+            'total_lecturas': total,
+            'temperatura': {
+                'promedio': round(stats['temp_avg'] or 0, 2),
+                'maximo': round(stats['temp_max'] or 0, 2),
+                'minimo': round(stats['temp_min'] or 0, 2),
+            },
+            'gas': {
+                'promedio': round(stats['gas_avg'] or 0, 1),
+                'maximo': stats['gas_max'] or 0,
+            },
+            'presion': {
+                'promedio': round(float(stats['presion_avg'] or 0), 2),
+                'maximo': round(float(stats['presion_max'] or 0), 2),
+                'minimo': round(float(stats['presion_min'] or 0), 2),
+            },
+            'eventos': {
+                'emergencias': emergencias,
+                'llamas_detectadas': llamas,
+                'activaciones_aspersion': aspersiones,
+                'cierres_valvulas': valvulas_cerradas,
+            },
+            'distribucion_estados': estados,
+            'serie': serie,
+        })
+
+
 # ── Ingesta desde ESP32 ───────────────────────────────────────────────────────
 
 @api_view(['POST'])
@@ -144,6 +230,15 @@ def ingestar_lectura(request):
 
     data = request.data.copy()
     data['dispositivo'] = dispositivo.id
+
+    # Inferir actuadores de emergencia según estado_sistema
+    estado = data.get('estado_sistema', 'NORMAL')
+    if 'aspersion_activa' not in data:
+        data['aspersion_activa'] = estado == 'LLAMA_DETECTADA'
+    if 'valvulas_cerradas' not in data:
+        data['valvulas_cerradas'] = estado in ('LLAMA_DETECTADA', 'EMERGENCIA_GAS', 'EMERGENCIA')
+    if 'evacuacion_activa' not in data:
+        data['evacuacion_activa'] = estado in ('EMERGENCIA_GAS', 'EMERGENCIA')
 
     serializer = LecturaSerializer(data=data)
     if serializer.is_valid():

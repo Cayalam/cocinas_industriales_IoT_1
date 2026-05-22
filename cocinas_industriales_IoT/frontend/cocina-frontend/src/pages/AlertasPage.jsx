@@ -31,7 +31,7 @@ export default function AlertasPage() {
 
   useEffect(() => {
     cargarDatos();
-    const intervalo = setInterval(cargarDatos, 5000);
+    const intervalo = setInterval(cargarDatos, 500);
     return () => clearInterval(intervalo);
   }, [dispositivoId]);
 
@@ -103,20 +103,32 @@ export default function AlertasPage() {
                 <span className="critica-valor">{lectura?.llama_detectada ? '🔥 DETECTADA' : '✅ No detectada'}</span>
                 <span className="critica-rango">Crítico si: SÍ</span>
               </div>
+              <div className={`critica-card ${parseFloat(lectura?.presion) > 1070 ? 'alerta' : ''}`}>
+                <span className="critica-label">Presión</span>
+                <span className="critica-valor">{parseFloat(lectura?.presion || 0).toFixed(1)} hPa</span>
+                <span className="critica-rango">Límite: 1070 hPa</span>
+              </div>
             </div>
           </div>
 
           <div className="historial-alertas">
-            <h3>Historial de Alertas</h3>
+            <div className="historial-alertas-header">
+              <h3>Historial de Alertas</h3>
+              <span className="alertas-contador">{alertas.length} eventos</span>
+            </div>
             {alertas.length === 0 ? (
               <div className="sin-alertas"><p>✅ No hay alertas registradas</p></div>
             ) : (
-              <div className="alertas-list">
+              <div className="alertas-list alertas-scroll">
                 {alertas.map((a, i) => (
-                  <div key={i} className="alerta-item">
+                  <div key={i} className={"alerta-item alerta-" + a.estado_sistema.toLowerCase().replace(/_/g, '-')}>
                     <div className="alerta-tiempo">{new Date(a.timestamp).toLocaleString('es-CO')}</div>
                     <div className="alerta-tipo">{a.estado_sistema.replace(/_/g, ' ')}</div>
-                    <div className="alerta-mensaje">Temp: {a.temperatura}°C · Gas: {a.nivel_gas}</div>
+                    <div className="alerta-mensaje">
+                      Temp: {a.temperatura}°C · Gas: {a.nivel_gas}
+                      {a.aspersion_activa && <span className="badge-aspersion"> 💧 Aspersión</span>}
+                      {a.valvulas_cerradas && <span className="badge-valvula"> 🔒 Válvulas</span>}
+                    </div>
                   </div>
                 ))}
               </div>

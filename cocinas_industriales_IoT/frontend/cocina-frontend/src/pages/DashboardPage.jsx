@@ -34,7 +34,7 @@ export default function DashboardPage() {
 
   useEffect(() => {
     cargar();
-    const intervalo = setInterval(cargar, 5000);
+    const intervalo = setInterval(cargar, 500);
     return () => clearInterval(intervalo);
   }, [dispositivoId]);
 
