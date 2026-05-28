@@ -219,6 +219,9 @@ class DispositivoViewSet(viewsets.ReadOnlyModelViewSet):
 def ingestar_lectura(request):
     """Endpoint exclusivo para el ESP32.
     Autenticacion por X-API-Key en el header."""
+    import logging
+    logger = logging.getLogger(__name__)
+    
     api_key = request.headers.get('X-API-Key', '')
     if not api_key:
         return Response({'error': 'Header X-API-Key requerido'}, status=status.HTTP_401_UNAUTHORIZED)
@@ -226,10 +229,12 @@ def ingestar_lectura(request):
     try:
         dispositivo = Dispositivo.objects.get(api_key=api_key, activo=True)
     except Dispositivo.DoesNotExist:
+        logger.warning(f"API key inválida: {api_key}")
         return Response({'error': 'API key invalida o dispositivo inactivo'}, status=status.HTTP_401_UNAUTHORIZED)
 
     data = request.data.copy()
     data['dispositivo'] = dispositivo.id
+    logger.info(f"Datos recibidos desde {dispositivo.codigo}: {data}")
 
     # Inferir actuadores de emergencia según estado_sistema
     estado = data.get('estado_sistema', 'NORMAL')
@@ -244,4 +249,5 @@ def ingestar_lectura(request):
     if serializer.is_valid():
         serializer.save()
         return Response(serializer.data, status=status.HTTP_201_CREATED)
+    logger.error(f"Errores de validación: {serializer.errors}")
     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)

@@ -39,6 +39,10 @@ void setup() {
   pinMode(PIN_LLAMA, INPUT);
   pinMode(PIN_PRESION, INPUT);
 
+  // Configurar ADC: resolución y atenuación para lectura correcta de sensores
+  analogSetWidth(12); // 0-4095
+  analogSetPinAttenuation(PIN_PRESION, ADC_11db);
+
   sensorTemp.begin();
   Wire.begin(21, 22);
 
@@ -148,10 +152,16 @@ void enviarDatosBackend(float temperatura, bool errorTemp, int gasRaw, int gasPc
   }
 
   // Convertir gasRaw (0-4095) a rango esperado por el backend (0-1023)
-  int nivelGasConvertido = map(gasRaw, 0, 4095, 0, 1023);
+  int nivelGasConvertido = map(gasRaw, 0, 2048, 0, 1023);
+  nivelGasConvertido = constrain(nivelGasConvertido, 0, 1023);
 
-  // Presion fija hasta conectar el sensor fisico
-  float presion = 1013.25;
+  // Lectura y conversión del sensor de presión (si está conectado)
+  int presADC = analogRead(PIN_PRESION);
+  int presRaw = map(presADC, 0, 4095, 0, 1023);
+  presRaw = constrain(presRaw, 0, 1023);
+  int presPct = map(presRaw, 0, 1023, 0, 100);
+  // Mapear porcentaje 0-100 a rango físico de presión 800-1200 hPa
+  float presion = 800.0 + (presPct * 4.0);
 
   // Si el sensor de temperatura falla, enviar valor neutro
   float tempEnvio = errorTemp ? 20.0 : temperatura;
@@ -211,6 +221,23 @@ void mostrarOLED(float temperatura, bool errorTemp, int gasRaw, int gasPct, bool
   display.print(gasPct);
   display.print("% ");
   display.print(gasRaw);
+
+  // Mostrar presión si hay sensor conectado (se lee directamente aquí)
+  int presADC = analogRead(PIN_PRESION);
+  int presRaw = map(presADC, 0, 4095, 0, 1023);
+  presRaw = constrain(presRaw, 0, 1023);
+  int presPct = map(presRaw, 0, 1023, 0, 100);
+
+  // Debug serial: mostrar lectura de ADC y valores mapeados
+  Serial.print("Pres ADC: "); Serial.print(presADC);
+  Serial.print("  raw: "); Serial.print(presRaw);
+  Serial.print("  pct: "); Serial.println(presPct);
+
+  display.setCursor(0, 36);
+  display.print("Pres: ");
+  display.print(presPct);
+  display.print("% ");
+  display.print(presRaw);
 
   display.setCursor(0, 42);
   display.print("Llama: ");
