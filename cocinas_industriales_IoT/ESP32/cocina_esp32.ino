@@ -20,7 +20,7 @@ const char* password = "carlosayala";
 
 // ── CAMBIOS PARA EL NUEVO BACKEND ────────────────────────────────────────────
 // 1. URL apunta al endpoint de ingesta (no /api/lecturas/)
-const char* serverUrl = "http://10.114.95.84:8000/api/ingesta/";
+const char* serverUrl = "http://10.77.9.95:8000/api/ingesta/";
 
 // 2. API key del dispositivo — debe coincidir exactamente con la del admin de Django
 const char* apiKey = "clave-esp32-cocina-001";
